@@ -1060,21 +1060,6 @@ class MockConversationService extends _i1.Mock
         returnValue: _i11.Stream<List<_i23.MessageDto>>.empty(),
         returnValueForMissingStub: _i11.Stream<List<_i23.MessageDto>>.empty(),
       ) as _i11.Stream<List<_i23.MessageDto>>);
-
-  @override
-  _i11.Future<Map<String, _i23.MessageDto>> getRecentChats(
-          String? authUserId) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getRecentChats,
-          [authUserId],
-        ),
-        returnValue: _i11.Future<Map<String, _i23.MessageDto>>.value(
-            <String, _i23.MessageDto>{}),
-        returnValueForMissingStub:
-            _i11.Future<Map<String, _i23.MessageDto>>.value(
-                <String, _i23.MessageDto>{}),
-      ) as _i11.Future<Map<String, _i23.MessageDto>>);
 }
 
 /// A class which mocks [RecentChatsService].

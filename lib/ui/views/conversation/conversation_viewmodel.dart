@@ -4,16 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:my_message/core/result.dart';
 import 'package:my_message/core/state_status.dart';
 import 'package:my_message/domain/entities/message_entity.dart';
+import 'package:my_message/domain/vo/get_conversation_vo.dart';
 import 'package:my_message/domain/vo/send_message_vo.dart';
 import 'package:my_message/domain/vo/update_recent_chat_vo.dart';
 import 'package:my_message/repositories/conversation_repository.dart';
 import 'package:my_message/repositories/recent_chats_repository.dart';
+import 'package:my_message/services/dto/get_conversation_dto.dart';
 import 'package:my_message/services/dto/send_message_dto.dart';
 import 'package:my_message/services/dto/update_recent_chat_dto.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
+import '../../../domain/vo/retrieved_messages_vo.dart';
 import '../../../repositories/auth_repository.dart';
 
 class ConversationViewModel extends BaseViewModel {
@@ -33,6 +36,7 @@ class ConversationViewModel extends BaseViewModel {
   List<MessageEntity> get messages => _messages;
   String get authUserId => _authUser?.uid ?? '';
   StateStatus get stateStatus => _stateStatus;
+  String get roomId => _roomId ?? '';
 
   void changeStateStatus(StateStatus stateStatus) {
     _stateStatus = stateStatus;
@@ -133,6 +137,24 @@ class ConversationViewModel extends BaseViewModel {
     final vo = (voOrError as Ok<UpdateRecentChatVo>).value;
 
     await _recentChatsRepository.updateRecentChat(vo);
+  }
+
+  Future<void> getConversation(String roomId) async {
+    final dto = GetConversationDto(roomId: roomId);
+
+    final voOrError = GetConversationVo.create(dto);
+
+    if (voOrError is Error<GetConversationVo>) {
+      return;
+    }
+
+    final vo = (voOrError as Ok<GetConversationVo>).value;
+
+    final result = await _conversationRepository.getConversation(vo);
+
+    if (result is Ok<RetrievedMessagesVo>) {
+      _messages = result.value.messages;
+    }
   }
 
   Future<void> readRecentChat(String roomId, String authUserId) async {

@@ -169,9 +169,12 @@ class HomeViewRouter extends _i1.RouterBase {
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i9.ChatView: (data) {
+      final args = data.getArgs<NestedChatViewArguments>(
+        orElse: () => const NestedChatViewArguments(),
+      );
       return _i7.PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            const _i9.ChatView(),
+            _i9.ChatView(key: args.key, goToSearchPage: args.goToSearchPage),
         settings: data,
         transitionsBuilder: data.transition ??
             (context, animation, secondaryAnimation, child) {
@@ -208,6 +211,33 @@ class HomeViewRouter extends _i1.RouterBase {
 
   @override
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
+}
+
+class NestedChatViewArguments {
+  const NestedChatViewArguments({
+    this.key,
+    this.goToSearchPage,
+  });
+
+  final _i7.Key? key;
+
+  final dynamic Function()? goToSearchPage;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "goToSearchPage": "$goToSearchPage"}';
+  }
+
+  @override
+  bool operator ==(covariant NestedChatViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.goToSearchPage == goToSearchPage;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ goToSearchPage.hashCode;
+  }
 }
 
 extension NavigatorStateExtension on _i12.NavigationService {
@@ -284,14 +314,18 @@ extension NavigatorStateExtension on _i12.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToNestedChatViewInHomeViewRouter([
+  Future<dynamic> navigateToNestedChatViewInHomeViewRouter({
+    _i7.Key? key,
+    dynamic Function()? goToSearchPage,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(HomeViewRoutes.chatView,
+        arguments:
+            NestedChatViewArguments(key: key, goToSearchPage: goToSearchPage),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -399,14 +433,18 @@ extension NavigatorStateExtension on _i12.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithNestedChatViewInHomeViewRouter([
+  Future<dynamic> replaceWithNestedChatViewInHomeViewRouter({
+    _i7.Key? key,
+    dynamic Function()? goToSearchPage,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(HomeViewRoutes.chatView,
+        arguments:
+            NestedChatViewArguments(key: key, goToSearchPage: goToSearchPage),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

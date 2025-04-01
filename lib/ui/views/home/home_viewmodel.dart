@@ -27,4 +27,12 @@ class HomeViewModel extends BaseViewModel {
   Widget getSelectedPage() {
     return pages[_currentIndex];
   }
+
+  void initializePages() {
+    pages[0] = ChatView(
+      goToSearchPage: () {
+        selectPage(1);
+      },
+    );
+  }
 }

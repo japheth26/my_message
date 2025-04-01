@@ -87,6 +87,43 @@ class ConversationView extends StackedView<ConversationViewModel> {
               );
             }
 
+            if (viewModel.messages.isEmpty &&
+                viewModel.stateStatus != StateStatus.initial) {
+              return Expanded(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Expanded(child: SizedBox()),
+                      Text(
+                        'Don\'t be shy',
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.grey[800],
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Icon(
+                        Icons.sentiment_very_satisfied_rounded,
+                        size: 100,
+                        color: Colors.grey[800],
+                      ),
+                      Text(
+                        'Say something!',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                      const Expanded(child: SizedBox()),
+                    ],
+                  ),
+                ),
+              );
+            }
+
             return Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -144,6 +181,7 @@ class ConversationView extends StackedView<ConversationViewModel> {
     viewModel.changeStateStatus(StateStatus.loading);
     await viewModel.getAuthUser();
     await viewModel.getRoomId(member.userId);
+    await viewModel.getConversation(viewModel.roomId);
     viewModel.connectToStream();
     viewModel.changeStateStatus(StateStatus.loaded);
   }

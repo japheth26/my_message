@@ -76,8 +76,7 @@ class ChatViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> getRecentChats(String authUserId,
-      {StateStatus? stateStatus}) async {
+  Future<void> getRecentChats(String authUserId) async {
     final dto = GetRecentChatsDto(
         authUserId: authUserId,
         lastVisible: _retrievedRecentChatsVo?.lastVisible);
@@ -94,13 +93,7 @@ class ChatViewModel extends BaseViewModel {
 
     final vo = (voOrError as Ok<GetRecentChatsVo>).value;
 
-    _stateStatus = stateStatus ?? StateStatus.loaded;
-    rebuildUi();
-
     final result = await _recentChatsRepository.getRecentChats(vo);
-
-    _stateStatus = StateStatus.loaded;
-    rebuildUi();
 
     if (result is Error<RetrievedRecentChatsVo>) {
       _dialogService.showDialog(
@@ -162,5 +155,10 @@ class ChatViewModel extends BaseViewModel {
     Timer.periodic(const Duration(minutes: 1), (timer) {
       rebuildUi();
     });
+  }
+
+  void changeStateStatus(StateStatus stateStatus) {
+    _stateStatus = stateStatus;
+    rebuildUi();
   }
 }

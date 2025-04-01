@@ -43,6 +43,43 @@ class PeopleView extends StackedView<PeopleViewModel> with $PeopleView {
             ));
           }
 
+          if (viewModel.searchedMembers.isEmpty &&
+              viewModel.stateStatus != StateStatus.initial) {
+            return Expanded(
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Expanded(child: SizedBox()),
+                    Text(
+                      'Where is everyone?',
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.grey[800],
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Icon(
+                      Icons.sentiment_very_dissatisfied_outlined,
+                      size: 100,
+                      color: Colors.grey[800],
+                    ),
+                    Text(
+                      'It\'s seems you\'re alone here!',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.grey[800],
+                      ),
+                    ),
+                    const Expanded(child: SizedBox()),
+                  ],
+                ),
+              ),
+            );
+          }
+
           return Expanded(
             child: Builder(builder: (context) {
               final isLoading = viewModel.stateStatus == StateStatus.loading;
