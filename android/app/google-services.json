@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "756703614104",
+    "project_id": "connect-and-chat",
+    "storage_bucket": "connect-and-chat.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:756703614104:android:890c9bbfbf0707a74ceced",
+        "android_client_info": {
+          "package_name": "com.example.my_message"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIraXjqfqpDR9svzmR6Z6MTWwUptuVcZg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
