@@ -1,6 +1,6 @@
 # my_message
 
-A Simple chat system that allows a user to communicate with other people. This app will open an opportunity for a new friend or a prospect.
+A dynamic chat platform that connects users with new people, sparking the potential for fresh friendships or exciting opportunities. Whether you're looking for a new friend or a potential prospect, this app opens the door to endless possibilities!
 
 ## Framework
 Flutter / Stacked
